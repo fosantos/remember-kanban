@@ -51,8 +51,8 @@ describe('server', () => {
   });
 
   it('bloqueia fuga do diretorio docs', async () => {
-    const r = await call('/..%2Fpackage.json');
+    const r = await call('/..%2Fserver.js');
     assert.notEqual(r.status, 200);
-    assert.doesNotMatch(r.body, /remember-kanban/);
+    assert.doesNotMatch(r.body, /createServer/);
   });
 });
