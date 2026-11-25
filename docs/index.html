@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Remember — Kanban traço à mão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <h1>Remember</h1>
+      <p>kanban de bolso, traço à mão</p>
+    </div>
+    <div class="topo-acoes">
+      <div class="zoom" role="group" aria-label="zoom do quadro">
+        <button id="btn-zoom-out" class="btn btn-peq" type="button" title="Reduzir (Ctrl+-)">−</button>
+        <button id="btn-zoom-nivel" class="btn btn-peq" type="button" title="Voltar a 100% (Ctrl+0)">100%</button>
+        <button id="btn-zoom-in" class="btn btn-peq" type="button" title="Ampliar (Ctrl++)">+</button>
+      </div>
+      <button id="btn-coluna" class="btn" type="button">+ nova coluna</button>
+    </div>
+  </header>
+
+  <div id="aviso-save" class="aviso" hidden></div>
+
+  <div id="barra-ligacao" class="barra-ligacao" hidden>
+    <span id="barra-ligacao-texto"></span>
+    <button id="barra-ligacao-cancelar" class="btn btn-peq" type="button">cancelar (esc)</button>
+  </div>
+
+  <div id="chip-ligacao" class="chip-ligacao" hidden>
+    <span id="chip-ligacao-texto"></span>
+    <button id="chip-remover" class="btn btn-peq btn-perigo" type="button">remover</button>
+    <button id="chip-fechar" class="btn btn-peq" type="button">fechar</button>
+  </div>
+
+  <main id="rolagem">
+    <div id="conteudo">
+      <div id="mesa"></div>
+      <svg id="ligacoes" aria-hidden="true">
+        <defs>
+          <filter id="tremido" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" seed="7" result="ruido"/>
+            <feDisplacementMap in="SourceGraphic" in2="ruido" scale="4"/>
+          </filter>
+        </defs>
+        <g id="camada-ligacoes" filter="url(#tremido)"></g>
+      </svg>
+    </div>
+  </main>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+      <h2 id="modal-titulo">editar cartão</h2>
+      <label class="campo">título
+        <input id="f-titulo" type="text" maxlength="120" autocomplete="off">
+      </label>
+      <label class="campo">descrição
+        <textarea id="f-desc" rows="4"></textarea>
+      </label>
+      <div class="campo">
+        <span class="rotulo">cor</span>
+        <div class="cores" id="f-cores" role="radiogroup" aria-label="cor do cartão"></div>
+      </div>
+      <div class="deps">
+        <h3>depende de</h3>
+        <ul id="lista-dep"></ul>
+      </div>
+      <div class="deps">
+        <h3>é pré-requisito de</h3>
+        <ul id="lista-bloq"></ul>
+      </div>
+      <div class="modal-acoes">
+        <button id="btn-salvar" class="btn" type="button">salvar</button>
+        <button id="btn-excluir" class="btn btn-perigo" type="button">excluir</button>
+        <button id="btn-fechar" class="btn" type="button">fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="rodape">arraste cartões entre colunas · “ligar” cria dependência · tudo fica salvo neste navegador</footer>
+
+  <script src="storage.js"></script>
+  <script src="setas.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
